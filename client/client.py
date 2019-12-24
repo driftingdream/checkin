@@ -39,7 +39,7 @@ def show_about():
     tkinter.messagebox.showinfo('About', "This is GUI window is totally handmade.")
 def main():
     root = tk.Tk()
-    app = Application(root, '技术部签到')
+    app = Application(root, 'Check In')
     app.creat_widgets()
     root.mainloop()
 
