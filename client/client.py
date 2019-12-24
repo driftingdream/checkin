@@ -36,7 +36,7 @@ def send_data(name):
     s.send(name.encode())
     s.close()
 def show_about():
-    tkinter.messagebox.showinfo('About', "This is GUI window is totally handmade.")
+    tkinter.messagebox.showinfo('About', "This GUI window is totally handmade.")
 def main():
     root = tk.Tk()
     app = Application(root, 'Check In')
