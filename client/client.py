@@ -34,9 +34,22 @@ def send_data(name):
     except socket.error as error:
         raise error
     s.send(name.encode())
+    STATUS = s.recv(1024)
+    STATUS = int.from_bytes(STATUS, byteorder='big')
+    if STATUS == 1:
+        show_messagebox('Failure', "You've already checked.")
+    elif STATUS == 0:
+        show_messagebox('Success', 'Welcome.')
+    elif STATUS == 2:
+        show_messagebox('Failure', 'No such a name, please check the text box.')
+
+
     s.close()
 def show_about():
     tkinter.messagebox.showinfo('About', "This GUI window is totally handmade.")
+
+def show_messagebox(title, msg):
+    tkinter.messagebox.showinfo(title, msg)
 def main():
     root = tk.Tk()
     app = Application(root, 'Check In')
