@@ -20,13 +20,17 @@ class STATUS():
 
 def check_name(name):
     if datetime.now().weekday()>=0 and datetime.now().weekday()<=4:
-        pass
+        with open('./namelist', 'r') as f:
+            for line in f.readlines():
+                if line == name:
+                    return 0
+            return 2 
+
     else:
         return 3
 '''
 the value of return:
                     0: success,
-                    1: failure, already checked,
                     2: failure, no such a name,
                     3: failure: wrong time.
 '''
