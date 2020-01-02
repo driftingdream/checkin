@@ -24,7 +24,7 @@ def check_name(name):
             for line in f.readlines():
                 if line == name:
                     return 0
-            return 2 
+            return 2
 
     else:
         return 3
@@ -48,6 +48,8 @@ def main():
         sock, addr = s.accept()
         data = sock.recv(1024)
         data = data.decode()
+
+        """
         if STATUS:
             sock.sendall(bytes([STATUS]))
         else:
@@ -56,6 +58,7 @@ def main():
                 STATUS = 1
             elif check_name(data) == 2:
                 sock.sendall(bytes([2]))
+        """
 
 
 
