@@ -8,7 +8,15 @@ class Application():
         self.root = root
         self.root.title(title)
 
-    def creat_widgets(self):
+    def creat_all_success(self):
+        success_label = tk.Label(self.root, text = "All checked")
+        success_label.grid(padx = 30, pady = 30)
+    def creat_checked_status_widgets(self):
+        self.label2 = tk.Label(self.root, text = "You've already checked. Do you want to sign out now")
+        self.button2 = tk.Button(self.root, text = 'Check out', command = self.check_out)
+        self.label2.grid(row = 0, pady = 10, padx = 10)
+        self.button2.grid(row = 1, pady = 10, padx = 10)
+    def creat_sign_in_widgets(self):
         img = tk.PhotoImage(file = 'made_by_python.gif')
         self.label1 = tk.Label(self.root, text = 'Name:')
         self.label1.grid(row=0, column=0, sticky=tk.E, pady = 10)
@@ -26,6 +34,21 @@ class Application():
         name = self.entry1.get()
         send_data(name)
 
+    def check_out(self):
+        'dadada'
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect(config.IP_PORT)
+        except socket.error as error:
+            raise error
+        s.send('check_out'.encode())
+        ischeckout = s.recv(1024).decode()
+        if ischeckout == 'yes':
+            show_messagebox('Success', "You've successfully checked out")
+        else:
+            show_messagebox('Failure', "Checking out failed, please contact Administator")
+        s.close()
+
 
 def send_data(name):
     try:
@@ -42,6 +65,7 @@ def send_data(name):
         show_messagebox('Success', 'Welcome.')
     elif STATUS == 2:
         show_messagebox('Failure', 'No such a name, please check the text box.')
+    s.close()
 
 
     s.close()
@@ -53,7 +77,10 @@ def show_messagebox(title, msg):
 def main():
     root = tk.Tk()
     app = Application(root, 'Check In')
-    app.creat_widgets()
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect(config.IP_PORT)
+    s.send('STATUS?')
+
     root.mainloop()
 
 if __name__ == '__main__':
