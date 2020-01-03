@@ -1,5 +1,6 @@
 import socket
 from datetime import datetime
+import xlwt
 
 STATUS = 0
 '''
@@ -35,6 +36,30 @@ the value of return:
                     3: failure: wrong time.
 '''
 
+def commandhandler(line):
+    parts = line.split(' ', 1)
+    if parts[0] == ' ':
+        return 3 #error
+    else:
+        meth = parts[0]
+        name = parts[1]
+        if meth == 'checkin':
+            checkin(name)
+        elif meth == 'checkout':
+            checkout()
+        else:
+            return 2 #method not found
+    return 0
+
+
+def checkin(name):
+    if check_name(name) == 0:
+        checkin_excel_wbk = wlwt.Workbook()
+        sheet = checkin_excel_wbk.add_sheet('checkin')
+        sheet.
+
+
+
 def main():
     global STATUS
     try:
@@ -48,6 +73,8 @@ def main():
         sock, addr = s.accept()
         data = sock.recv(1024)
         data = data.decode()
+        commandhandler(data)
+
 
         """
         if STATUS:
